@@ -1,0 +1,18 @@
+service: serverless-crud-app
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  architecture: x86_64
+  stage: dev # Set the default stage used. Default is dev
+  region: us-east-1 # Overwrite the default region used. Default is us-east-1
+  profile: ebuka-dev-cli # The default profile to use with this service
+  memorySize: 1024 # Overwrite the default memory size. Default is 1024
+  stackName: serverless-crud-app
+  
+functions:
+  api:
+    handler: src/app.handler
+    events:
+      - httpApi: "*"
