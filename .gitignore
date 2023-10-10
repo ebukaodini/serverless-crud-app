@@ -38,6 +38,7 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 build
+.build
 
 # Dependency directories
 node_modules/
@@ -129,3 +130,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+swagger.json
+postman_collection.json
+
+env.json
+env.prod.json

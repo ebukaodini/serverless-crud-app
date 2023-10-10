@@ -1,3 +1,5 @@
+org: ebukaodini
+app: serverless-crud-app
 service: serverless-crud-app
 frameworkVersion: "3"
 
@@ -10,9 +12,20 @@ provider:
   profile: ebuka-dev-cli # The default profile to use with this service
   memorySize: 1024 # Overwrite the default memory size. Default is 1024
   stackName: serverless-crud-app
-  
+
 functions:
   api:
     handler: src/app.handler
+    role: ${file(./env.prod.json):FunctionRole}
     events:
       - httpApi: "*"
+    environment:
+      DbHost: ${file(./env.prod.json):DbHost}
+      DbUser: ${file(./env.prod.json):DbUser}
+      DbPassword: ${file(./env.prod.json):DbPassword}
+      DbName: ${file(./env.prod.json):DbName}
+      AppSecret: ${file(./env.prod.json):AppSecret}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline

@@ -8,6 +8,10 @@ import * as dotenv from "dotenv";
 import { response } from "./utils/response";
 import { DatabaseService } from "./services/database.service";
 
+// routes
+import userRoutes from "./routes/users.routes";
+import authRoutes from "./routes/auth.routes";
+
 // configure the dotenv
 if (process.env.NODE_ENV === "test")
   dotenv.config({
@@ -18,9 +22,6 @@ else dotenv.config();
 // create express app
 const app = express();
 
-// connect to database
-DatabaseService.connect();
-
 // use other middlewares
 app.use(response);
 app.use(logger("dev"));
@@ -28,10 +29,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
+DatabaseService.connect();
+
 // routes
 app.get("/", (req, res, next) => {
   return res.success("Welcome!");
 });
+app.use(userRoutes);
+app.use(authRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (_req, res, next) {
@@ -41,8 +46,6 @@ app.use(function (_req, res, next) {
 
 // error handler
 app.use((err: any, req: Request, res: Response) => {
-  console.log(err);
-
   return res.error(
     err.status === 500 ? "Server Error! Please try again." : err.message,
     undefined,
