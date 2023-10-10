@@ -87,5 +87,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log(`🚀 Deployed on ${addr.address === '::' ? 'http://localhost' : addr.address}:${addr.port}`)
+  console.log(`Listening on ${addr.address === '::' ? 'http://localhost' : addr.address}:${addr.port}`)
 }
